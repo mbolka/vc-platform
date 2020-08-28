@@ -69,11 +69,18 @@ jobs:
       run: vc-build Compress -skip Clean+Restore+Compile+Test
 
     - name: Build Docker Image
-      if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/dev-workflow' }}
       id: dockerBuild
       uses: VirtoCommerce/vc-github-actions/build-docker-image@dev
       with:
         tag: ${{ steps.image.outputs.taggedVersion }}
+
+    - name: Docker Env
+      uses: VirtoCommerce/vc-github-actions/docker-env@dev
+      with:
+        dockerTag: dev-linux-latest
+        platformImage: docker pull docker.pkg.github.com/virtocommerce/vc-platform/platform
+        storefrontImage: docker.pkg.github.com/virtocommerce/vc-storefront/storefront
           
     - name: Publish Nuget
       uses: VirtoCommerce/vc-github-actions/publish-nuget@dev
