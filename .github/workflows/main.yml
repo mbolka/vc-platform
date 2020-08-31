@@ -78,6 +78,8 @@ jobs:
     - name: Docker Env
       uses: VirtoCommerce/vc-github-actions/docker-env@dev
       with:
+        githubUser: ${{ env.GITHUB_ACTOR }}
+        githubToken: ${{ env.GITHUB_TOKEN }}
         dockerTag: dev-linux-latest
         platformImage: docker pull docker.pkg.github.com/virtocommerce/vc-platform/platform
         storefrontImage: docker.pkg.github.com/virtocommerce/vc-storefront/storefront
